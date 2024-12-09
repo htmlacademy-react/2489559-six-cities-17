@@ -2,6 +2,7 @@ import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page.tsx/login-page';
 import FavoritesPage from '../../pages/favourites-page/favourites-page';
 import OfferPage from '../../pages/offers-page/offers-page';
+import PageNotFound from '../../pages/not-found-page/not-found-page';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { AppRoute } from '../../constants/constants';
 
@@ -26,6 +27,9 @@ function App({ placesToStay, emailAddress, favoriteCount }: AppPageProps): JSX.E
         />
         <Route path={AppRoute.Offer}
           element={<OfferPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
+        />
+        <Route path="*"
+          element={<PageNotFound emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
       </Routes>
     </BrowserRouter>
