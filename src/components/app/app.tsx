@@ -3,8 +3,9 @@ import LoginPage from '../../pages/login-page.tsx/login-page';
 import FavoritesPage from '../../pages/favourites-page/favourites-page';
 import OfferPage from '../../pages/offers-page/offers-page';
 import PageNotFound from '../../pages/not-found-page/not-found-page';
+import PrivateRoute from '../private-route/private-route';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
-import { AppRoute } from '../../constants/constants';
+import { AppRoute, AuthorizationStatus } from '../../constants/constants';
 
 type AppPageProps = {
   placesToStay: number;
@@ -23,7 +24,13 @@ function App({ placesToStay, emailAddress, favoriteCount }: AppPageProps): JSX.E
           element={<LoginPage />}
         />
         <Route path={AppRoute.Favorites}
-          element={<FavoritesPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.NoAuth}
+            >
+              <FavoritesPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>
+            </PrivateRoute>
+          }
         />
         <Route path={AppRoute.Offer}
           element={<OfferPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
