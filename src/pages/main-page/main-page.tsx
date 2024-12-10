@@ -1,6 +1,8 @@
 import OfferPreview from '../../components/offers/offer-preview';
+import LocationsList from '../../components/locations/locations';
 import Header from '../../components/header/header';
 import { mockOffers } from '../../mocks/offers';
+import Sorting from '../../components/sorting/sorting';
 
 type MainPageProps = {
   placesToStay: number;
@@ -17,42 +19,7 @@ function MainPage({ placesToStay, emailAddress, favoriteCount }: MainPageProps):
       />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <LocationsList />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
@@ -66,12 +33,7 @@ function MainPage({ placesToStay, emailAddress, favoriteCount }: MainPageProps):
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
+                <Sorting />
               </form>
               <div className="cities__places-list places__list tabs__content">
                 <OfferPreview
