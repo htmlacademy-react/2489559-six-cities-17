@@ -1,4 +1,4 @@
-export interface OfferBase {
+export interface OffersBase {
   id: string;
   title: string;
   type: string;
@@ -20,7 +20,7 @@ export interface City {
   location: Location;
 }
 
-export interface Offers extends OfferBase {
+export interface Offers extends OffersBase {
   city: City;
   location: Location;
 }
