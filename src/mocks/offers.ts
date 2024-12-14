@@ -1,4 +1,6 @@
-const mockOffers = [
+import { Offers } from '../types/types';
+
+export const mockOffers: Offers[] = [
   {
     id: '1af6f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious apartment at great location',
@@ -115,5 +117,3 @@ const mockOffers = [
     previewImage: 'img/room.jpg',
   },
 ];
-
-export { mockOffers };
