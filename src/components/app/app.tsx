@@ -35,7 +35,7 @@ function App({ placesToStay, emailAddress, favoriteCount }: AppPageProps): JSX.E
         <Route path={AppRoute.Offer}
           element={<OfferPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
-        <Route path="*"
+        <Route path={AppRoute.Error}
           element={<PageNotFound emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
       </Routes>
