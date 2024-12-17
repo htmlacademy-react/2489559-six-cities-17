@@ -6,19 +6,22 @@ import PageNotFound from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants/constants';
+import { Offers } from '../../types/types-offers';
 
 type AppPageProps = {
-  placesToStay: number;
   emailAddress: string;
   favoriteCount: number;
+  offers: Offers[];
+  offerId: string;
 }
 
-function App({ placesToStay, emailAddress, favoriteCount }: AppPageProps): JSX.Element {
+function App(props : AppPageProps): JSX.Element {
+  const { emailAddress, favoriteCount, offers, offerId } = props;
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}
-          element={<MainPage placesToStay={placesToStay} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
+          element={<MainPage offers = {offers} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
         <Route path={AppRoute.Login}
           element={<LoginPage />}
@@ -26,16 +29,16 @@ function App({ placesToStay, emailAddress, favoriteCount }: AppPageProps): JSX.E
         <Route path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <FavoritesPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>
+              <FavoritesPage offers = {offers} emailAddress={emailAddress} favoriteCount={favoriteCount}/>
             </PrivateRoute>
           }
         />
         <Route path={AppRoute.Offer}
-          element={<OfferPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
+          element={<OfferPage offerId={offerId} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
-        <Route path="*"
+        <Route path={AppRoute.Error}
           element={<PageNotFound emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
       </Routes>
