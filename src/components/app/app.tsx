@@ -6,19 +6,21 @@ import PageNotFound from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants/constants';
+import { Offers } from '../../types/types-offers';
 
 type AppPageProps = {
-  placesToStay: number;
   emailAddress: string;
   favoriteCount: number;
+  offers: Offers[];
 }
 
-function App({ placesToStay, emailAddress, favoriteCount }: AppPageProps): JSX.Element {
+function App(props : AppPageProps): JSX.Element {
+  const { emailAddress, favoriteCount, offers } = props;
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}
-          element={<MainPage placesToStay={placesToStay} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
+          element={<MainPage offers = {offers} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
         <Route path={AppRoute.Login}
           element={<LoginPage />}
