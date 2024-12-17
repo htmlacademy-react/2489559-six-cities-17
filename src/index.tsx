@@ -13,6 +13,7 @@ root.render(
       emailAddress='Oliver.conner@gmail.com'
       favoriteCount={3}
       offers = {mockOffers}
+      offerId='123'
     />
   </React.StrictMode>,
 );
