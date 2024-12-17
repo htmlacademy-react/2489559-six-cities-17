@@ -1,25 +1,32 @@
 import { Offers } from '../../types/types-offers';
 import classNames from 'classnames';
 import { getStarsRating } from '../../utils/utils';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants/constants';
 
 type CardOfferProps = {
   offers: Offers;
+  onPlaceMouseEnter: () => void;
+  onPlaceMouseLeave: () => void;
 }
 
 function CardsItem(props : CardOfferProps): JSX.Element {
-  const {offers} = props;
+  const {offers, onPlaceMouseEnter, onPlaceMouseLeave} = props;
   const { isPremium, previewImage, price, isFavorite, rating, title, type } = offers;
   const starsRating = getStarsRating(rating);
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card"
+      onMouseEnter={onPlaceMouseEnter}
+      onMouseLeave={onPlaceMouseLeave}
+    >
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-        </a>
+        <Link to={AppRoute.Offer}>
+          <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place image" />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
