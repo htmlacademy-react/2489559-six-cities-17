@@ -2,6 +2,8 @@ import { Offers } from '../types/types-offers';
 
 const getStarsRating = (rating: number) => `${20 * rating}%`;
 
+const capitalizeFirstLetter = (inputString: string): string => inputString.charAt(0).toUpperCase() + inputString.slice(1);
+
 const getFavoriteOffers = (offers: Offers[]) => {
   const favoriteOffers = offers.filter((element) => element.isFavorite);
 
@@ -27,4 +29,4 @@ const getFavoriteOffers = (offers: Offers[]) => {
 };
 
 
-export { getStarsRating, getFavoriteOffers };
+export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter };
