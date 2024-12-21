@@ -10,7 +10,7 @@ type FavirotesListGroupProps = {
 function FavirotesListGroup(props: FavirotesListGroupProps): JSX.Element {
   const { offers } = props;
   const favoriteOffers = getFavoriteOffers(offers);
-  if (favoriteOffers === undefined) {
+  if (!favoriteOffers) {
     return (
       <FavoritesEmpty />
     );

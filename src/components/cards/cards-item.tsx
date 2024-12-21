@@ -1,30 +1,33 @@
 import { Offers } from '../../types/types-offers';
 import classNames from 'classnames';
-import { getStarsRating } from '../../utils/utils';
+import { getStarsRating, capitalizeFirstLetter } from '../../utils/utils';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants/constants';
+import { generatePath } from 'react-router-dom';
+import { MouseEvent } from 'react';
 
 type CardOfferProps = {
   offers: Offers;
-  onPlaceMouseEnter: () => void;
+  onPlaceMouseEnter: (evt: MouseEvent<HTMLLIElement>) => void;
   onPlaceMouseLeave: () => void;
 }
 
 function CardsItem(props : CardOfferProps): JSX.Element {
-  const {offers, onPlaceMouseEnter, onPlaceMouseLeave} = props;
-  const { isPremium, previewImage, price, isFavorite, rating, title, type } = offers;
+  const {offers, onPlaceMouseEnter, onPlaceMouseLeave } = props;
+  const { isPremium, previewImage, price, isFavorite, rating, title, type, id } = offers;
   const starsRating = getStarsRating(rating);
   return (
     <article className="cities__card place-card"
+      data-id={offers.id}
       onMouseEnter={onPlaceMouseEnter}
       onMouseLeave={onPlaceMouseLeave}
     >
-      {isPremium ?
+      {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div> : ''}
+        </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer}>
+        <Link to={generatePath(AppRoute.Offer, { id })}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place image" />
         </Link>
       </div>
@@ -50,7 +53,7 @@ function CardsItem(props : CardOfferProps): JSX.Element {
         <h2 className="place-card__name">
           <a href="#">{title}</a>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>
     </article>
   );

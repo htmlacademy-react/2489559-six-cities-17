@@ -11,10 +11,10 @@ function FavirotesItem(props: FavirotesItemProps): JSX.Element {
   const starsRating = getStarsRating(rating);
   return (
     <article className="favorites__card place-card">
-      {isPremium ?
+      {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div> : ''}
+        </div>}
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={previewImage} width={150} height={110} alt="Place image" />
