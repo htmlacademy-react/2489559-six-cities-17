@@ -4,19 +4,21 @@ import { getStarsRating, capitalizeFirstLetter } from '../../utils/utils';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants/constants';
 import { generatePath } from 'react-router-dom';
+import { MouseEvent } from 'react';
 
 type CardOfferProps = {
   offers: Offers;
-  onPlaceMouseEnter: () => void;
+  onPlaceMouseEnter: (evt: MouseEvent<HTMLLIElement>) => void;
   onPlaceMouseLeave: () => void;
 }
 
 function CardsItem(props : CardOfferProps): JSX.Element {
-  const {offers, onPlaceMouseEnter, onPlaceMouseLeave} = props;
+  const {offers, onPlaceMouseEnter, onPlaceMouseLeave } = props;
   const { isPremium, previewImage, price, isFavorite, rating, title, type, id } = offers;
   const starsRating = getStarsRating(rating);
   return (
     <article className="cities__card place-card"
+      data-id={offers.id}
       onMouseEnter={onPlaceMouseEnter}
       onMouseLeave={onPlaceMouseLeave}
     >

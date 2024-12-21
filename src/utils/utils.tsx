@@ -1,4 +1,6 @@
 import { Offers } from '../types/types-offers';
+import { City } from '../types/city/city-type';
+import { CityLocation } from '../types/city/city-location-type';
 
 const getStarsRating = (rating: number) => `${20 * rating}%`;
 
@@ -28,5 +30,12 @@ const getFavoriteOffers = (offers: Offers[]) => {
   return Array.from(favoritesOffersByLocation).map(([name, places]) => ({name, places}));
 };
 
+const getOffersCities = (offers: Offers[]) => {
+  const cities = new Map<string, CityLocation>();
+  offers.forEach((offer) => {
+    cities.set(offer.city.name, offer.city.location);
+  });
+  return Array.from(cities).map(([name, location]): City => ({ name, location }));
+};
 
-export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter };
+export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities };
