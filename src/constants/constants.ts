@@ -11,3 +11,7 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const MAP_MARKER_DEFAULT = '../img/pin.svg';
+
+export const MAP_MARKER_CURRENT = '../img/pin-active.svg';
