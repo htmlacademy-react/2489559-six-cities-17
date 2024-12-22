@@ -2,15 +2,18 @@ import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../hooks/use-map';
+import classNames from 'classnames';
 import { MAP_MARKER_CURRENT, MAP_MARKER_DEFAULT } from '../../constants/constants';
 import { City } from '../../types/city/city-type';
 import { Offers } from '../../types/types-offers';
+import { offerPageType } from '../../constants/constants';
 
 
 type MapProps = {
   city: City;
   offers: Offers[];
-  selectedOffer: Offers | null;
+  selectedOffer?: Offers | null;
+  mapType?: offerPageType;
 };
 
 const defaultMapPin = new Icon({
@@ -26,7 +29,7 @@ const currentMapPin = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, offers, selectedOffer } = props;
+  const { city, offers, selectedOffer, mapType = 'cities' } = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -54,7 +57,13 @@ function Map(props: MapProps): JSX.Element {
   }, [map, offers, selectedOffer]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={classNames(
+      'map',
+      { 'cities__map': mapType === offerPageType.CITIES },
+      { 'offer__map': mapType === offerPageType.NEAR_PLACES })}
+    ref={mapRef}
+    >
+    </section >
   );
 }
 

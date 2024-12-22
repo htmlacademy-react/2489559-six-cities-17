@@ -1,9 +1,13 @@
 import Header from '../../components/header/header';
+import { getOffersCities } from '../../utils/utils';
+import Map from '../../components/map/map';
 import ReviewsForm from '../../components/reviews/reviews-form';
 import ReviewsList from '../../components/reviews/reviews-list';
 import { mockReviews } from '../../mocks/reviews';
 import OffersList from '../../components/cards/cards-list';
 import { Offers } from '../../types/types-offers';
+import { useState } from 'react';
+import { offerPageType } from '../../constants/constants';
 
 type OfferPageProps = {
   emailAddress: string;
@@ -13,6 +17,17 @@ type OfferPageProps = {
 }
 function OfferPage(props : OfferPageProps): JSX.Element {
   const {emailAddress, favoriteCount, offerId, nearbyOffers} = props;
+
+  const offersCities = getOffersCities(nearbyOffers);
+
+  const [selectedOffer, setSelectedOffer] = useState<Offers | null>(null);
+
+  const handleOfferMouseEnter = (targetedOffer: Offers) => {
+    setSelectedOffer(targetedOffer);
+  };
+  const handleOfferMouseLeave = () => {
+    setSelectedOffer(null);
+  };
   return (
     <div className="page">
       <Header
@@ -148,12 +163,12 @@ function OfferPage(props : OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map city={offersCities[0]} offers={nearbyOffers} selectedOffer={selectedOffer} mapType={offerPageType.NEAR_PLACES}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList offers = {nearbyOffers} onOfferMouseEnter={() => {}} onOfferMouseLeave={() => {}} />
+            <OffersList offers = {nearbyOffers} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} />
           </section>
         </div>
       </main>
