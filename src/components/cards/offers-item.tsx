@@ -6,13 +6,13 @@ import { AppRoute } from '../../constants/constants';
 import { generatePath } from 'react-router-dom';
 import { MouseEvent } from 'react';
 
-type CardOfferProps = {
+type OffersItemProps = {
   offers: Offers;
   onPlaceMouseEnter: (evt: MouseEvent<HTMLLIElement>) => void;
   onPlaceMouseLeave: () => void;
 }
 
-function CardsItem(props : CardOfferProps): JSX.Element {
+function OffersItem(props : OffersItemProps): JSX.Element {
   const {offers, onPlaceMouseEnter, onPlaceMouseLeave } = props;
   const { isPremium, previewImage, price, isFavorite, rating, title, type, id } = offers;
   const starsRating = getStarsRating(rating);
@@ -59,4 +59,4 @@ function CardsItem(props : CardOfferProps): JSX.Element {
   );
 }
 
-export default CardsItem;
+export default OffersItem;

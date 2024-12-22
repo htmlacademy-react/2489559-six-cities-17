@@ -7,7 +7,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
   const isRendered = useRef<boolean>(false);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRendered.current) {
+    if (mapRef.current && !isRendered.current) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,
