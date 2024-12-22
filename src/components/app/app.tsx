@@ -12,11 +12,12 @@ type AppPageProps = {
   emailAddress: string;
   favoriteCount: number;
   offers: Offers[];
+  nearbyOffers: Offers[];
   offerId: string;
 }
 
 function App(props : AppPageProps): JSX.Element {
-  const { emailAddress, favoriteCount, offers, offerId } = props;
+  const { emailAddress, favoriteCount, offers, offerId, nearbyOffers } = props;
   return (
     <BrowserRouter>
       <Routes>
@@ -36,7 +37,7 @@ function App(props : AppPageProps): JSX.Element {
           }
         />
         <Route path={AppRoute.Offer}
-          element={<OfferPage offerId={offerId} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
+          element={<OfferPage nearbyOffers={nearbyOffers} offerId={offerId} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
         <Route path={AppRoute.Error}
           element={<PageNotFound emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
