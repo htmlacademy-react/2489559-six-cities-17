@@ -1,6 +1,7 @@
 import { Offers } from '../types/types-offers';
 import { City } from '../types/city/city-type';
 import { CityLocation } from '../types/city/city-location-type';
+import dayjs from 'dayjs';
 
 const getStarsRating = (rating: number) => `${20 * rating}%`;
 
@@ -38,4 +39,8 @@ const getOffersCities = (offers: Offers[]) => {
   return Array.from(cities).map(([name, location]): City => ({ name, location }));
 };
 
-export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities };
+const convertDateToProperty = (dateString: string) => dayjs(dateString).format('YYYY-MM-DD');
+
+const convertDateToHumanized = (dateString: string) => dayjs(dateString).format('MMMM D');
+
+export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities, convertDateToHumanized, convertDateToProperty };

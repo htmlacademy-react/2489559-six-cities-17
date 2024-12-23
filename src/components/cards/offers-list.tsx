@@ -1,14 +1,14 @@
-import CardItems from './cards-item';
+import CardItems from './offers-item';
 import { Offers } from '../../types/types-offers';
 import { MouseEvent } from 'react';
 
-type CardsListProps = {
+type OffersListProps = {
   offers: Offers[];
   onOfferMouseEnter: (offer: Offers) => void;
   onOfferMouseLeave: () => void;
 }
 
-function OfferList(props: CardsListProps): JSX.Element {
+function OffersList(props: OffersListProps): JSX.Element {
   const { offers, onOfferMouseEnter, onOfferMouseLeave } = props;
 
   const handleOfferItemMouseEnter = (evt: MouseEvent<HTMLLIElement>) => {
@@ -37,4 +37,4 @@ function OfferList(props: CardsListProps): JSX.Element {
   );
 }
 
-export default OfferList;
+export default OffersList;

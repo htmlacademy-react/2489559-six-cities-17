@@ -2,7 +2,7 @@
 import LocationsList from '../../components/locations/locations';
 import Header from '../../components/header/header';
 import Sorting from '../../components/sorting/sorting';
-import OffersList from '../../components/cards/cards-list';
+import OffersList from '../../components/cards/offers-list';
 import { Offers } from '../../types/types-offers';
 import Map from '../../components/map/map';
 import { getOffersCities } from '../../utils/utils';
