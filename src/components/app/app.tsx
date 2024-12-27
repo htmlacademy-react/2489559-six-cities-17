@@ -17,12 +17,12 @@ type AppPageProps = {
 }
 
 function App(props : AppPageProps): JSX.Element {
-  const { emailAddress, favoriteCount, offers, offerId, nearbyOffers } = props;
+  const { emailAddress, favoriteCount, offers, offerId, nearbyOffers} = props;
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}
-          element={<MainPage offers = {offers} emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
+          element={<MainPage emailAddress={emailAddress} favoriteCount={favoriteCount}/>}
         />
         <Route path={AppRoute.Login}
           element={<LoginPage />}
