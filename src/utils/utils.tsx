@@ -43,4 +43,6 @@ const convertDateToProperty = (dateString: string) => dayjs(dateString).format('
 
 const convertDateToHumanized = (dateString: string) => dayjs(dateString).format('MMMM D');
 
-export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities, convertDateToHumanized, convertDateToProperty };
+const getCurrentLocationOffers = (offers: Offers[], location: string) => offers.filter((offer) => offer.city.name === location);
+
+export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities, convertDateToHumanized, convertDateToProperty, getCurrentLocationOffers};

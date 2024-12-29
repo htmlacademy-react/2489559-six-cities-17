@@ -17,6 +17,15 @@ export enum offerPageType {
   NEAR_PLACES = 'near-places',
 }
 
+export const LOCATIONS = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
 export const MAP_MARKER_DEFAULT = '../img/pin.svg';
 
 export const MAP_MARKER_CURRENT = '../img/pin-active.svg';
