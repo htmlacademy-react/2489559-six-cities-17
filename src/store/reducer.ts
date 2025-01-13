@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { mockOffers } from '../mocks/offers';
-import { changeCity, loadOffers, changeSortingState, changeSortingType } from './action';
+import { changeCity, loadOffers, changeSortingState, changeSortingType, loadOffer } from './action';
 import { getCurrentLocationOffers } from '../utils/utils';
 import { Offers, City } from '../types/types-offers';
 import { LOCATIONS, SORT_TYPE } from '../constants/constants';
@@ -15,8 +14,8 @@ const initialState: {
 } =
 {
   city: LOCATIONS[0],
-  offers: mockOffers,
-  currentOffers: getCurrentLocationOffers(mockOffers, LOCATIONS[0]),
+  offers: [],
+  currentOffers: [],
   currentSortingType: SORT_TYPE.POPULAR,
   isSortingOpened: false,
 };
@@ -27,7 +26,8 @@ const reducer = createReducer(initialState, (builder) => {
       const { city } = action.payload;
       state.city = city;
     })
-    .addCase(loadOffers, (state) => {
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
       state.currentOffers = getCurrentLocationOffers(state.offers, state.city);
     })
     .addCase(changeSortingState, (state, action) => {
