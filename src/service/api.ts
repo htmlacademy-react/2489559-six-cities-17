@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance } from 'axios';
 
 const BACKEND_URL = 'https://16.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -11,3 +11,5 @@ const createAPI = (): AxiosInstance => {
 
   return api;
 };
+
+export {createAPI};
