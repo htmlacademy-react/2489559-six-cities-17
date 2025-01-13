@@ -12,6 +12,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum offerPageType {
   CITIES = 'cities',
   NEAR_PLACES = 'near-places',
