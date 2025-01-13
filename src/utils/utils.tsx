@@ -45,4 +45,38 @@ const convertDateToHumanized = (dateString: string) => dayjs(dateString).format(
 
 const getCurrentLocationOffers = (offers: Offers[], location: string) => offers.filter((offer) => offer.city.name === location);
 
-export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities, convertDateToHumanized, convertDateToProperty, getCurrentLocationOffers};
+const getPriceFromLowToHigh = (priceA : Offers, priceB : Offers) => {
+  if (priceA.price > priceB.price) {
+    return 1;
+  } else if (priceA.price < priceB.price) {
+    return -1;
+  }
+  return 0;
+};
+
+const getPriceFromHighToLow = (priceA : Offers, priceB : Offers) => {
+  if (priceA.price > priceB.price) {
+    return -1;
+  } else if (priceA.price < priceB.price) {
+    return 1;
+  }
+  return 0;
+};
+
+const getRatingFromHighToLow = (ratingA : Offers, ratingB : Offers) => {
+  if (ratingA.rating > ratingB.rating) {
+    return -1;
+  } else if (ratingA.rating < ratingB.rating) {
+    return 1;
+  }
+  return 0;
+};
+
+const sortByPriceFromLowToHigh = (offers: Offers[]) => [...offers].sort(getPriceFromLowToHigh);
+
+const sortByPriceFromHighToLow = (offers: Offers[]) => [...offers].sort(getPriceFromHighToLow);
+
+const sortByRatingFromHighToLow = (offers: Offers[]) => [...offers].sort(getRatingFromHighToLow);
+
+
+export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities, convertDateToHumanized, convertDateToProperty, getCurrentLocationOffers, sortByPriceFromLowToHigh, sortByPriceFromHighToLow, sortByRatingFromHighToLow};

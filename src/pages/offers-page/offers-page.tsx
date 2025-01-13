@@ -4,7 +4,7 @@ import Map from '../../components/map/map';
 import ReviewsForm from '../../components/reviews/reviews-form';
 import ReviewsList from '../../components/reviews/reviews-list';
 import { mockReviews } from '../../mocks/reviews';
-import OffersList from '../../components/cards/offers-list';
+import OffersList from '../../components/offer/offers-list';
 import { Offers } from '../../types/types-offers';
 import { useState } from 'react';
 import { offerPageType } from '../../constants/constants';

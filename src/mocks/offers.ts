@@ -5,6 +5,29 @@ export const mockOffers: Offers[] = [
     id: '1af6f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious apartment at great location',
     type: 'Apartment',
+    price: 110,
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 12,
+      },
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 12,
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 1,
+    previewImage: '../img/apartment-01.jpg',
+  },
+  {
+    id: '1af6f711-c28d-4121-82cd-e0b462a27f01',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'Apartment',
     price: 120,
     city: {
       name: 'Paris',
@@ -21,7 +44,53 @@ export const mockOffers: Offers[] = [
     },
     isFavorite: false,
     isPremium: true,
-    rating: 4,
+    rating: 2,
+    previewImage: '../img/apartment-01.jpg',
+  },
+  {
+    id: '1af6f711-c28d-4121-82cd-e0b462a27f02',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'Apartment',
+    price: 130,
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 12,
+      },
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 12,
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 3,
+    previewImage: '../img/apartment-01.jpg',
+  },
+  {
+    id: '1af6f711-c28d-4121-82cd-e0b462a27f03',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'Apartment',
+    price: 140,
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 12,
+      },
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 12,
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 3,
     previewImage: '../img/apartment-01.jpg',
   },
   {
@@ -94,7 +163,7 @@ export const mockOffers: Offers[] = [
     previewImage: 'img/apartment-03.jpg',
   },
   {
-    id: '5af6f711-c28d-4121-82cd-e0b462a27f00',
+    id: '5af6f711-c28d-4121-82cd-e0b462a27f10',
     title: 'Wood and stone place',
     type: 'Room',
     price: 80,
@@ -117,10 +186,10 @@ export const mockOffers: Offers[] = [
     previewImage: 'img/room.jpg',
   },
   {
-    id: '5af6f711-c28d-4121-82cd-e0b462a27f00',
+    id: '5af6f711-c28d-4121-82cd-e0b462a27f011',
     title: 'Wood and stone place',
     type: 'Room',
-    price: 80,
+    price: 90,
     city: {
       name: 'Amsterdam',
       location: {
@@ -136,7 +205,7 @@ export const mockOffers: Offers[] = [
     },
     isFavorite: true,
     isPremium: false,
-    rating: 4,
+    rating: 3,
     previewImage: 'img/room.jpg',
   },
   {
