@@ -44,3 +44,5 @@ export const SORT_TYPE = {
 export const MAP_MARKER_DEFAULT = '../img/pin.svg';
 
 export const MAP_MARKER_CURRENT = '../img/pin-active.svg';
+
+export const TIMEOUT_SHOW_ERROR = 2000;
