@@ -1,21 +1,12 @@
 import Header from '../../components/header/header';
 import FavoritesList from '../../components/favourites/favourites-list';
-import { Offers } from '../../types/types-offers';
+import { useAppSelector } from '../../components/hooks';
 
-type FavoritesPageProps = {
-  emailAddress: string;
-  favoriteCount: number;
-  offers: Offers[];
-}
-function FavoritesPage(props : FavoritesPageProps): JSX.Element {
-  const {emailAddress,favoriteCount,offers} = props;
+function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.favoriteOffers);
   return (
     <div className="page">
-      <Header
-        emailAddress={emailAddress}
-        favoriteCount={favoriteCount}
-      />
-
+      <Header/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">

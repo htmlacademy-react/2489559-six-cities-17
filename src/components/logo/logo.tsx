@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants/constants';
 
-function Logo(): JSX.Element {
+function HeaderLogo(): JSX.Element {
   return (
-    <Link className="header__logo-link" to="/">
+    <Link className="header__logo-link header__logo-link--active" to={AppRoute.Main}>
       <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
     </Link>
   );
 }
 
-export default Logo;
+export default HeaderLogo;

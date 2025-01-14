@@ -1,11 +1,7 @@
 import Logo from '../logo/logo';
 
-type HeaderProps = {
-  emailAddress: string;
-  favoriteCount: number;
-}
 
-function Header({ emailAddress, favoriteCount }: HeaderProps): JSX.Element {
+function Header(): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -19,8 +15,8 @@ function Header({ emailAddress, favoriteCount }: HeaderProps): JSX.Element {
                 <a className="header__nav-link header__nav-link--profile" href="#">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
-                  <span className="header__user-name user__name">{emailAddress}</span>
-                  <span className="header__favorite-count">{favoriteCount}</span>
+                  <span className="header__user-name user__name">123@mail.com</span>
+                  <span className="header__favorite-count">123</span>
                 </a>
               </li>
               <li className="header__nav-item">

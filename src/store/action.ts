@@ -8,3 +8,4 @@ export const changeSortingState = createAction<{sortingState: boolean}>('sorting
 export const changeSortingType = createAction<{sortingType: string}>('sortingType/changeSortingType');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const setError = createAction<string | null>('offers/setError');
+export const setLoadingStatus = createAction<boolean>('common/setLoadingStatus');
