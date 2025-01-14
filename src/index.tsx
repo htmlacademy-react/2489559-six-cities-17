@@ -6,6 +6,9 @@ import { mockNearbyOffers } from './mocks/nearby-offers';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import ErrorMessage from './components/error-message/error-message';
+import { checkAuthAction } from './store/api-action';
+
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
