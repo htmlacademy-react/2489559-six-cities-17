@@ -5,6 +5,7 @@ import { mockOffers } from './mocks/offers';
 import { mockNearbyOffers } from './mocks/nearby-offers';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import ErrorMessage from './components/error-message/error-message';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,6 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage />
       <App
         emailAddress='Oliver.conner@gmail.com'
         favoriteCount={3}
