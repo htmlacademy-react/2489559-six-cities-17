@@ -1,7 +1,7 @@
 import LocationsList from '../../components/locations/locations-list';
 import Header from '../../components/header/header';
-import Sorting from '../../components/sorting/sorting';
-import OffersList from '../../components/cards/offers-list';
+import SortingList from '../../components/sorting/sorting-list';
+import OffersList from '../../components/offer/offers-list';
 import { Offers, City } from '../../types/types-offers';
 import Map from '../../components/map/map';
 
@@ -44,14 +44,7 @@ function MainPage(props : MainPageProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{currentOffers.length} places to stay {currentCityTitle}</b>
               <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <Sorting />
+                <SortingList />
               </form>
               <OffersList offers = {currentOffers} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} />
             </section>
