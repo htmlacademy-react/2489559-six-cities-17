@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants/constants';
 import Loading from '../loading/loading';
 import { useAppSelector } from '../hooks';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -18,32 +19,35 @@ function App(): JSX.Element {
     );
   }
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Main}
-          element={<MainPage />}
-        />
-        <Route path={AppRoute.Login}
-          element={<LoginPage />}
-        />
-        <Route path={AppRoute.Favorites}
-          element={
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              <FavoritesPage/>
-            </PrivateRoute>
-          }
-        />
-        <Route path={AppRoute.Offer}
-          element={<OfferPage/>}
-        />
-        <Route path={AppRoute.Error}
-          element={<PageNotFound/>}
-        />
-      </Routes>
-    </BrowserRouter>
-
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={AppRoute.Main}
+            element={<MainPage />}
+          />
+          <Route path={AppRoute.Login}
+            element={
+              <PrivateRoute navigateTo={AppRoute.Main} authorizationStatus={AuthorizationStatus.NoAuth}>
+                <LoginPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path={AppRoute.Favorites}
+            element={
+              <PrivateRoute navigateTo={AppRoute.Login} authorizationStatus={AuthorizationStatus.Auth}>
+                <FavoritesPage/>
+              </PrivateRoute>
+            }
+          />
+          <Route path={AppRoute.Offer}
+            element={<OfferPage/>}
+          />
+          <Route path={AppRoute.Error}
+            element={<PageNotFound/>}
+          />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
