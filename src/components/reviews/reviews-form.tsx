@@ -1,11 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 type ReviewsFormProps = {
-  offerId: string;
-  onAddReview: (offerId: string, rating: number, review: string) => void;
+  onAddReview: (rating: number, review: string) => void;
 };
 
-function ReviewsForm({offerId, onAddReview}: ReviewsFormProps): JSX.Element {
+function ReviewsForm({onAddReview}: ReviewsFormProps): JSX.Element {
   const [formData, setFormData] = useState({
     rating: 0,
     review: '',
@@ -17,7 +16,7 @@ function ReviewsForm({offerId, onAddReview}: ReviewsFormProps): JSX.Element {
   return (
     <form className='reviews__form form' action='#' method='post' onSubmit={(evt: FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
-      onAddReview(offerId, formData.rating, formData.review);
+      onAddReview(formData.rating, formData.review);
     }}
     >
       <label className='reviews__label form__label' htmlFor='review'>Your review</label>

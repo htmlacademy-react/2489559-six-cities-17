@@ -1,24 +1,16 @@
 import Header from '../../components/header/header';
-import { getOffersCities } from '../../utils/utils';
 import Map from '../../components/map/map';
 import ReviewsForm from '../../components/reviews/reviews-form';
 import ReviewsList from '../../components/reviews/reviews-list';
-import { mockReviews } from '../../mocks/reviews';
 import OffersList from '../../components/offer/offers-list';
-import { Offers } from '../../types/types-offers';
+import { City, Offers } from '../../types/types-offers';
 import { useState } from 'react';
 import { offerPageType } from '../../constants/constants';
+import { useAppSelector } from '../../components/hooks';
 
-type OfferPageProps = {
-  emailAddress: string;
-  favoriteCount: number;
-  offerId: string;
-  nearbyOffers: Offers[];
-}
-function OfferPage(props : OfferPageProps): JSX.Element {
-  const {emailAddress, favoriteCount, offerId, nearbyOffers} = props;
-
-  const offersCities = getOffersCities(nearbyOffers);
+function OfferPage(): JSX.Element {
+  const openedOffer = useAppSelector((state) => state.offers[0]);
+  const offerCity: City = openedOffer.city;
 
   const [selectedOffer, setSelectedOffer] = useState<Offers | null>(null);
 
@@ -30,11 +22,7 @@ function OfferPage(props : OfferPageProps): JSX.Element {
   };
   return (
     <div className="page">
-      <Header
-        emailAddress={emailAddress}
-        favoriteCount={favoriteCount}
-      />
-
+      <Header/>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -155,20 +143,20 @@ function OfferPage(props : OfferPageProps): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewsList reviews={mockReviews} />
-                <ReviewsForm offerId={offerId} onAddReview={() => {
+                <ReviewsList reviews={[]} />
+                <ReviewsForm onAddReview={() => {
                   throw new Error('Send!');
                 }}
                 />
               </section>
             </div>
           </div>
-          <Map city={offersCities[0]} offers={nearbyOffers} selectedOffer={selectedOffer} mapType={offerPageType.NEAR_PLACES}/>
+          <Map city={offerCity} offers={[]} selectedOffer={selectedOffer} mapType={offerPageType.NEAR_PLACES}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList offers = {nearbyOffers} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} />
+            <OffersList offers = {[]} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} />
           </section>
         </div>
       </main>

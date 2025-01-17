@@ -4,18 +4,12 @@ import SortingList from '../../components/sorting/sorting-list';
 import OffersList from '../../components/offer/offers-list';
 import { Offers, City } from '../../types/types-offers';
 import Map from '../../components/map/map';
-
 import { useState } from 'react';
 import { LOCATIONS } from '../../constants/constants';
 import { useAppSelector } from '../../components/hooks';
 
-type MainPageProps = {
-  emailAddress: string;
-  favoriteCount: number;
-}
+function MainPage(): JSX.Element {
 
-function MainPage(props : MainPageProps): JSX.Element {
-  const { emailAddress, favoriteCount} = props;
 
   const currentOffers = useAppSelector((state) => state.currentOffers);
   const currentCityTitle = useAppSelector((state) => state.city);
@@ -31,10 +25,7 @@ function MainPage(props : MainPageProps): JSX.Element {
   };
   return (
     <div className="page page--gray page--main">
-      <Header
-        emailAddress={emailAddress}
-        favoriteCount={favoriteCount}
-      />
+      <Header/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <LocationsList locations={LOCATIONS} />

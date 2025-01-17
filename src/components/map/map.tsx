@@ -29,7 +29,7 @@ const currentMapPin = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, offers, selectedOffer, mapType = 'cities' } = props;
+  const { city, offers, selectedOffer, mapType = offerPageType.CITIES } = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
