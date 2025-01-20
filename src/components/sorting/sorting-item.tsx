@@ -1,10 +1,10 @@
-import { MouseEvent } from 'react';
 import classNames from 'classnames';
 import { useAppSelector } from '../hooks';
+import { SortType } from '../../constants/constants';
 
 type SortingItemProps = {
-  onSortingTypeChange: (evt: MouseEvent<HTMLLIElement>) => void;
-  sortingType: string;
+  onSortingTypeChange: (inputSorting: SortType) => void;
+  sortingType: SortType;
 }
 
 function SortingItem(props: SortingItemProps): JSX.Element {
@@ -12,8 +12,8 @@ function SortingItem(props: SortingItemProps): JSX.Element {
   const currentSorting = useAppSelector((state) => state.currentSortingType);
 
   return (
-    <li className={classNames('places__option', { 'places__option--active': sortingType === currentSorting })} tabIndex={0}
-      onClick={onSortingTypeChange}
+    <li className={classNames('places__option', { 'places__option--active': sortingType as string === currentSorting })} tabIndex={0}
+      onClick={() => onSortingTypeChange(sortingType)}
     >
       {sortingType}
     </li>

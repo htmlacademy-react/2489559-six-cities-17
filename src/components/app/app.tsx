@@ -5,18 +5,16 @@ import OfferPage from '../../pages/offers-page/offers-page';
 import PageNotFound from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../constants/constants';
+import { AppRoute, AuthorizationStatus, DataStatus } from '../../constants/constants';
 import Loading from '../loading/loading';
 import { useAppSelector } from '../hooks';
 import { HelmetProvider } from 'react-helmet-async';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isLoading = useAppSelector((state) => state.isLoading);
-  if (authorizationStatus === AuthorizationStatus.Unknown || isLoading) {
-    return (
-      <Loading />
-    );
+  const offersLoadingState = useAppSelector((state) => state.offersState);
+  if (authorizationStatus === AuthorizationStatus.Unknown || offersLoadingState === DataStatus.Loading) {
+    return <Loading />;
   }
   return (
     <HelmetProvider>

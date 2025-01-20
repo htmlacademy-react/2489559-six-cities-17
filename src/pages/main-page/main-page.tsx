@@ -5,8 +5,9 @@ import OffersList from '../../components/offer/offers-list';
 import { Offers, City } from '../../types/types-offers';
 import Map from '../../components/map/map';
 import { useState } from 'react';
-import { LOCATIONS } from '../../constants/constants';
+import { LOCATIONS, OfferPageType } from '../../constants/constants';
 import { useAppSelector } from '../../components/hooks';
+import { MouseEvent } from 'react';
 
 function MainPage(): JSX.Element {
 
@@ -17,8 +18,12 @@ function MainPage(): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offers | null>(null);
 
-  const handleOfferMouseEnter = (offer: Offers) => {
-    setSelectedOffer(offer);
+  const handleOfferMouseEnter = (evt: MouseEvent<HTMLElement>) => {
+    const currentOffer = currentOffers.find((element) => element.id === evt.currentTarget.dataset.id);
+    if (!currentOffer) {
+      return;
+    }
+    setSelectedOffer(currentOffer);
   };
   const handleOfferMouseLeave = () => {
     setSelectedOffer(null);
@@ -37,7 +42,7 @@ function MainPage(): JSX.Element {
               <form className="places__sorting" action="#" method="get">
                 <SortingList />
               </form>
-              <OffersList offers = {currentOffers} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} />
+              <OffersList offers={currentOffers} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} pageType={OfferPageType.CITIES} />
             </section>
             <div className="cities__right-section">
               <Map city={currentCity} offers={currentOffers} selectedOffer={selectedOffer} />
