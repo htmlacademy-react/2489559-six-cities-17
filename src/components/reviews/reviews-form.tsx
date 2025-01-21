@@ -1,67 +1,74 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { RATING_OPTIONS, ReviewOption, SubmitStatus } from '../../constants/constants';
+import CommentRatingButton from './review-rating-button';
+import { checkReviewInRange } from '../../utils/utils';
+import { submitCommentAction } from '../../store/api-action';
+import { useAppDispatch, useAppSelector} from '../../components/hooks';
 
 type ReviewsFormProps = {
-  onAddReview: (rating: number, review: string) => void;
-};
+  id: string;
+}
 
-function ReviewsForm({onAddReview}: ReviewsFormProps): JSX.Element {
-  const [formData, setFormData] = useState({
-    rating: 0,
-    review: '',
-  });
-  const handleFieldChange = (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const {name, value} = evt.target;
-    setFormData({...formData, [name]: value});
+function ReviewsForm(props: ReviewsFormProps): JSX.Element {
+  const { id } = props;
+  const dispatch = useAppDispatch();
+  const submitStatus = useAppSelector((state) => state.submitStatus);
+
+  const [formRating, setFormRating] = useState(0);
+  const [formComment, setFormComment] = useState('');
+
+  const comment = formComment;
+  const rating = formRating;
+
+  const handleRatingChange = (value: number): void => setFormRating(value);
+
+  const handleCommentChange = (text: string): void => setFormComment(text);
+
+  const handleFormSubmit = (evt: ChangeEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(submitCommentAction({ comment, rating, id }));
+    setFormRating(0);
+    setFormComment('');
   };
+
   return (
-    <form className='reviews__form form' action='#' method='post' onSubmit={(evt: FormEvent<HTMLFormElement>) => {
-      evt.preventDefault();
-      onAddReview(formData.rating, formData.review);
-    }}
+    <form
+      className="reviews__form form"
+      onSubmit={handleFormSubmit}
     >
-      <label className='reviews__label form__label' htmlFor='review'>Your review</label>
-      <div className='reviews__rating-form form__rating'>
-        <input className='form__rating-input visually-hidden' name='rating' value='5' id='5-stars' type='radio' onChange={handleFieldChange}/>
-        <label htmlFor='5-stars' className='reviews__rating-label form__rating-label' title='perfect'>
-          <svg className='form__star-image' width='37' height='33'>
-            <use xlinkHref='#icon-star'></use>
-          </svg>
-        </label>
+      <label className="reviews__label form__label" htmlFor="review">Your review</label>
+      <div className="reviews__rating-form form__rating">
 
-        <input className='form__rating-input visually-hidden' name='rating' value='4' id='4-stars' type='radio' onChange={handleFieldChange}/>
-        <label htmlFor='4-stars' className='reviews__rating-label form__rating-label' title='good'>
-          <svg className='form__star-image' width='37' height='33'>
-            <use xlinkHref='#icon-star'></use>
-          </svg>
-        </label>
+        {RATING_OPTIONS.map(({ value, title }) => (
+          <CommentRatingButton
+            key={value}
+            value={value}
+            title={title}
+            onCommentRatingButtonChange={handleRatingChange}
+            checked={formRating === value}
+          />))}
 
-        <input className='form__rating-input visually-hidden' name='rating' value='3' id='3-stars' type='radio' onChange={handleFieldChange}/>
-        <label htmlFor='3-stars' className='reviews__rating-label form__rating-label' title='not bad'>
-          <svg className='form__star-image' width='37' height='33'>
-            <use xlinkHref='#icon-star'></use>
-          </svg>
-        </label>
-
-        <input className='form__rating-input visually-hidden' name='rating' value='2' id='2-stars' type='radio' onChange={handleFieldChange}/>
-        <label htmlFor='2-stars' className='reviews__rating-label form__rating-label' title='badly'>
-          <svg className='form__star-image' width='37' height='33'>
-            <use xlinkHref='#icon-star'></use>
-          </svg>
-        </label>
-
-        <input className='form__rating-input visually-hidden' name='rating' value='1' id='1-star' type='radio' onChange={handleFieldChange}/>
-        <label htmlFor='1-star' className='reviews__rating-label form__rating-label' title='terribly'>
-          <svg className='form__star-image' width='37' height='33'>
-            <use xlinkHref='#icon-star'></use>
-          </svg>
-        </label>
       </div>
-      <textarea className='reviews__textarea form__textarea' id='review' name='review' placeholder='Tell how was your stay, what you like and what can be improved' onChange={handleFieldChange} value={formData.review}></textarea>
-      <div className='reviews__button-wrapper'>
-        <p className='reviews__help'>
-          To submit review please make sure to set <span className='reviews__star'>rating</span> and describe your stay with at least <b className='reviews__text-amount'>50 characters</b>.
+      <textarea
+        className="reviews__textarea form__textarea"
+        value={formComment}
+        id="review"
+        name="review"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        onChange={(evt) => handleCommentChange(evt.target.value)}
+      >
+      </textarea>
+      <div className="reviews__button-wrapper">
+        <p className="reviews__help">
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className='reviews__submit form__submit button' type='submit'>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={!(formRating && checkReviewInRange(ReviewOption.minLength, ReviewOption.maxLength, formComment)) || submitStatus === SubmitStatus.Loading}
+        >
+          {submitStatus === SubmitStatus.Loading ? 'Loading...' : 'Submit'}
+        </button>
       </div>
     </form>
   );

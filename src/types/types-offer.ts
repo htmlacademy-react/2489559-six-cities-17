@@ -9,7 +9,7 @@ rating: number;
 description: string;
 bedrooms: number;
 goods: string[];
-images: string[];
+images: string[] | null;
 maxAdults: number;
 }
 

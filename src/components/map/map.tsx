@@ -6,14 +6,16 @@ import classNames from 'classnames';
 import { MAP_MARKER_CURRENT, MAP_MARKER_DEFAULT } from '../../constants/constants';
 import { City } from '../../types/city/city-type';
 import { Offers } from '../../types/types-offers';
-import { offerPageType } from '../../constants/constants';
+import { OfferPageType } from '../../constants/constants';
+import { Offer } from '../../types/types-offer';
 
 
 type MapProps = {
   city: City;
-  offers: Offers[];
+  offers: Offers[] | null;
   selectedOffer?: Offers | null;
-  mapType?: offerPageType;
+  mapType?: OfferPageType;
+  offerOpened?: Offer;
 };
 
 const defaultMapPin = new Icon({
@@ -29,7 +31,7 @@ const currentMapPin = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, offers, selectedOffer, mapType = offerPageType.CITIES } = props;
+  const { city, offers, selectedOffer, offerOpened, mapType = 'cities' } = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -37,7 +39,7 @@ function Map(props: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      offers.forEach((offer) => {
+      offers?.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude
@@ -50,17 +52,25 @@ function Map(props: MapProps): JSX.Element {
         ).addTo(markerLayer);
       });
 
+      if (offerOpened) {
+        const marker = new Marker({
+          lat: offerOpened.location.latitude,
+          lng: offerOpened.location.longitude
+        });
+        marker.setIcon(currentMapPin).addTo(markerLayer);
+      }
+
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, selectedOffer, offerOpened]);
 
   return (
     <section className={classNames(
       'map',
-      { 'cities__map': mapType === offerPageType.CITIES },
-      { 'offer__map': mapType === offerPageType.NEAR_PLACES })}
+      { 'cities__map': mapType === OfferPageType.CITIES },
+      { 'offer__map': mapType === OfferPageType.NEAR_PLACES })}
     ref={mapRef}
     >
     </section >

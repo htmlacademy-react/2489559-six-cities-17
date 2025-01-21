@@ -5,20 +5,25 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants/constants';
 import { generatePath } from 'react-router-dom';
 import { MouseEvent } from 'react';
+import { OfferPageType } from '../../constants/constants';
 
-type OffersItemProps = {
-  offers: Offers;
-  onPlaceMouseEnter: (evt: MouseEvent<HTMLLIElement>) => void;
-  onPlaceMouseLeave: () => void;
+
+type OfferItemProps = {
+  offer: Offers;
+  pageType: OfferPageType;
+  onPlaceMouseEnter?: (evt: MouseEvent<HTMLElement>) => void;
+  onPlaceMouseLeave?: () => void;
 }
 
-function OffersItem(props : OffersItemProps): JSX.Element {
-  const {offers, onPlaceMouseEnter, onPlaceMouseLeave } = props;
-  const { isPremium, previewImage, price, isFavorite, rating, title, type, id } = offers;
+function OfferItem(props: OfferItemProps): JSX.Element {
+  const { offer, pageType, onPlaceMouseEnter, onPlaceMouseLeave } = props;
+  const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
   const starsRating = getStarsRating(rating);
+
   return (
-    <article className="cities__card place-card"
-      data-id={offers.id}
+    <article
+      className={`${pageType}__card place-card`}
+      data-id={offer.id}
       onMouseEnter={onPlaceMouseEnter}
       onMouseLeave={onPlaceMouseLeave}
     >
@@ -26,23 +31,31 @@ function OffersItem(props : OffersItemProps): JSX.Element {
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${pageType}__image-wrapper place-card__image-wrapper`}>
         <Link to={generatePath(AppRoute.Offer, { id })}>
-          <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place image" />
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={pageType === OfferPageType.FAVORITES ? 150 : 260}
+            height={pageType === OfferPageType.FAVORITES ? 110 : 200}
+            alt="Place image"
+          />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={classNames('place-card__info', { 'favorites__card-info': pageType === OfferPageType.FAVORITES })}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
+
           <button className={classNames('place-card__bookmark-button', { 'place-card__bookmark-button--active': isFavorite }, 'button', 'type="button"')}>
-            <svg className="place-card__bookmark-icon" width="18" height="19">
+            <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
+
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -56,7 +69,8 @@ function OffersItem(props : OffersItemProps): JSX.Element {
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>
     </article>
+
   );
 }
 
-export default OffersItem;
+export default OfferItem;
