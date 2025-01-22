@@ -10,6 +10,7 @@ import { MouseEvent, memo, useState, useCallback } from 'react';
 import { getCurrentOffers, getOffersCityTitle } from '../../store/offers-slice/offers-selectors';
 import { BLANK_CITY } from '../../constants/constants';
 import { City } from '../../types/city/city-type';
+import MainEmpty from '../../components/main-empty/main-emty';
 
 function MainPage(): JSX.Element {
 
@@ -37,21 +38,23 @@ function MainPage(): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <LocationsList locations={LOCATIONS} />
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffers.length} places to stay {currentCityTitle}</b>
-              <form className="places__sorting" action="#" method="get">
-                <SortingList />
-              </form>
-              <OffersList offers={currentOffers} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} pageType={OfferPageType.CITIES} />
-            </section>
-            <div className="cities__right-section">
-              <Map city={currentCity} offers={currentOffers} selectedOffer={selectedOffer} />
+        {isCurrentOffersEmpty ? <MainEmpty /> : (
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{currentOffers.length} places to stay {currentCityTitle}</b>
+                <form className="places__sorting" action="#" method="get">
+                  <SortingList />
+                </form>
+                <OffersList offers={currentOffers} onOfferMouseEnter={handleOfferMouseEnter} onOfferMouseLeave={handleOfferMouseLeave} pageType={OfferPageType.CITIES} />
+              </section>
+              <div className="cities__right-section">
+                <Map city={currentCity} offers={currentOffers} selectedOffer={selectedOffer} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );
