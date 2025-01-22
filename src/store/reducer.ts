@@ -1,12 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, changeSortingState, changeSortingType } from './action';
-import { getCurrentLocationOffers, sortOffers } from '../utils/utils';
+import { getCurrentLocationOffers, sortOffers, updateOfferFavoriteStatus } from '../utils/utils';
 import { Offers } from '../types/types-offers';
 import { BLANK_OFFER_EXTENDED, DataStatus, LOCATIONS, SortType, SubmitStatus } from '../constants/constants';
 import { AuthorizationStatus } from '../constants/constants';
 import { UserData } from '../types/user-data';
 import { Offer } from '../types/types-offer';
-import { checkAuthAction, fetchOfferAction, fetchOfferCommentsAction, fetchOffersAction, fetchOffersNearbyAction, loginAction, logoutAction, submitCommentAction, fetchOffersFavouritesAction } from './api-action';
+import { checkAuthAction, fetchOfferAction, fetchOfferCommentsAction, fetchOffersAction, fetchOffersNearbyAction, loginAction, logoutAction, submitCommentAction, fetchOffersFavouritesAction, addOfferToFavoriteAction, removeOfferFromFavoriteAction } from './api-action';
 import { toast } from 'react-toastify';
 import { OfferComment } from '../types/types-offer-comment';
 
@@ -29,10 +29,12 @@ const initialState: {
   currentOffersNearby: Offers[];
   currentOffersNearbyState: DataStatus;
 
+  authorizationStatus: AuthorizationStatus;
+
   favoriteOffers: Offers[];
   favoriteOffersState: DataStatus;
 
-  authorizationStatus: AuthorizationStatus;
+  favouriteOfferStatusState: DataStatus;
 
   user: UserData | null;
   userState: DataStatus;
@@ -61,6 +63,8 @@ const initialState: {
 
   favoriteOffers: [],
   favoriteOffersState: DataStatus.Unknown,
+
+  favouriteOfferStatusState: DataStatus.Unknown,
 
   user: null,
   userState: DataStatus.Unknown,
@@ -141,7 +145,20 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffersFavouritesAction.rejected, (state) => {
       state.favoriteOffersState = DataStatus.Error;
-      toast.error('Loading favorite offers error');
+    })
+    // @-- Toggle Favourite Offer --@ \\
+    .addCase(addOfferToFavoriteAction.fulfilled, (state) => {
+      state.currentOffer.isFavorite = true;
+    })
+    .addCase(removeOfferFromFavoriteAction.fulfilled, (state) => {
+      state.currentOffer.isFavorite = false;
+    })
+    // @-- Toggle Favourite Offers --@ \\
+    .addCase(addOfferToFavoriteAction.fulfilled, (state, action) => {
+      state.currentOffers = updateOfferFavoriteStatus(state.currentOffers, action.payload, true);
+    })
+    .addCase(removeOfferFromFavoriteAction.fulfilled, (state, action) => {
+      state.currentOffers = updateOfferFavoriteStatus(state.currentOffers, action.payload, false);
     })
     // @-- Auth --@ \\
     .addCase(loginAction.fulfilled, (state, action) => {
