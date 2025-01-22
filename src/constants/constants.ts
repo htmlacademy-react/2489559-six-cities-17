@@ -66,6 +66,11 @@ export enum MAX_PLACES_NEARBY {
   MAX_PLACES = 3,
 }
 
+export enum FavoriteStatus {
+  SetFavorite = 1,
+  UnsetFavorite = 0,
+}
+
 export const RATING_OPTIONS = [
   {
     value: 5,

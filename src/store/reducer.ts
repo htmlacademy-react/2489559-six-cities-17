@@ -6,7 +6,7 @@ import { BLANK_OFFER_EXTENDED, DataStatus, LOCATIONS, SortType, SubmitStatus } f
 import { AuthorizationStatus } from '../constants/constants';
 import { UserData } from '../types/user-data';
 import { Offer } from '../types/types-offer';
-import { checkAuthAction, fetchOfferAction, fetchOfferCommentsAction, fetchOffersAction, fetchOffersNearbyAction, loginAction, logoutAction, submitCommentAction } from './api-action';
+import { checkAuthAction, fetchOfferAction, fetchOfferCommentsAction, fetchOffersAction, fetchOffersNearbyAction, loginAction, logoutAction, submitCommentAction, fetchOffersFavouritesAction } from './api-action';
 import { toast } from 'react-toastify';
 import { OfferComment } from '../types/types-offer-comment';
 
@@ -130,6 +130,18 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchOffersNearbyAction.rejected, (state) => {
       state.currentOffersNearbyState = DataStatus.Error;
       toast.error('Loading nearby offers error');
+    })
+    // @-- Favourites --@ \\
+    .addCase(fetchOffersFavouritesAction.pending, (state) => {
+      state.favoriteOffersState = DataStatus.Loading;
+    })
+    .addCase(fetchOffersFavouritesAction.fulfilled, (state, action) => {
+      state.favoriteOffersState = DataStatus.Loaded;
+      state.favoriteOffers = action.payload;
+    })
+    .addCase(fetchOffersFavouritesAction.rejected, (state) => {
+      state.favoriteOffersState = DataStatus.Error;
+      toast.error('Loading favorite offers error');
     })
     // @-- Auth --@ \\
     .addCase(loginAction.fulfilled, (state, action) => {

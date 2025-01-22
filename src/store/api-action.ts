@@ -10,6 +10,7 @@ import { OfferComment } from '../types/types-offer-comment';
 import { toast } from 'react-toastify';
 import { Offers } from '../types/types-offers';
 import { ReviewForm } from '../types/types-review-form';
+import { OfferFavouritePost } from '../types/types-offer-favourite';
 
 export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
   dispatch: AppDispatch;
@@ -31,6 +32,16 @@ export const fetchOfferAction = createAsyncThunk<Offer, string, {
     return data;
   });
 
+export const fetchOffersFavouritesAction = createAsyncThunk<Offers[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offers/fetchOffersFavorite', async (_arg, { extra: api }) => {
+    const { data } = await api.get<Offers[]>(APIRoute.Favorite);
+    return data;
+  });
+
 export const fetchOfferCommentsAction = createAsyncThunk<OfferComment[], string, {
   dispatch: AppDispatch;
   state: State;
@@ -49,6 +60,16 @@ export const fetchOffersNearbyAction = createAsyncThunk<Offers[], string, {
   'offers/fetchOffersNearby', async (id, { extra: api }) => {
     const { data } = await api.get<Offers[]>(`${APIRoute.Offers}/${id}/nearby`);
     return data;
+  });
+
+export const toggleOfferFavoriteStatusAction = createAsyncThunk<void, OfferFavouritePost, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'offers/setOfferFavoriteStatus', async ({ id, status }, { dispatch, extra: api }) => {
+    await api.post<OfferFavouritePost>(`${APIRoute.Favorite}/${id}/${status}`, { status });
+    dispatch(fetchOffersFavouritesAction());
   });
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {

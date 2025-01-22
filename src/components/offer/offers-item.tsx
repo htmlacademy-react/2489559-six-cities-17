@@ -2,10 +2,12 @@ import { Offers } from '../../types/types-offers';
 import classNames from 'classnames';
 import { getStarsRating, capitalizeFirstLetter } from '../../utils/utils';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../constants/constants';
+import { AppRoute, FavoriteStatus } from '../../constants/constants';
 import { generatePath } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { OfferPageType } from '../../constants/constants';
+import { useAppDispatch } from '../hooks';
+import { toggleOfferFavoriteStatusAction } from '../../store/api-action';
 
 
 type OfferItemProps = {
@@ -19,6 +21,12 @@ function OfferItem(props: OfferItemProps): JSX.Element {
   const { offer, pageType, onPlaceMouseEnter, onPlaceMouseLeave } = props;
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
   const starsRating = getStarsRating(rating);
+  const dispatch = useAppDispatch();
+
+  const handleFavoriteButtonClick = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    dispatch(toggleOfferFavoriteStatusAction({ id, status: isFavorite ? FavoriteStatus.UnsetFavorite : FavoriteStatus.SetFavorite }));
+  };
 
   return (
     <article
@@ -49,7 +57,9 @@ function OfferItem(props: OfferItemProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <button className={classNames('place-card__bookmark-button', { 'place-card__bookmark-button--active': isFavorite }, 'button', 'type="button"')}>
+          <button className={classNames('place-card__bookmark-button', { 'place-card__bookmark-button--active': isFavorite }, 'button', 'type="button"')}
+            onClick={handleFavoriteButtonClick}
+          >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
