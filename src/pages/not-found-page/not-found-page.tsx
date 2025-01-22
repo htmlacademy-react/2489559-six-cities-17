@@ -7,7 +7,7 @@ function PageNotFound (): JSX.Element {
       <Header/>
       <section className="page page--gray page--main">
         <h1>404. Page not found</h1>
-        <Link to="/">Вернуться на главную</Link>
+        <Link to="/">Вернуться на главную страницу</Link>
       </section>
     </div>
   );
