@@ -5,15 +5,17 @@ import OfferPage from '../../pages/offers-page/offers-page';
 import PageNotFound from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, DataStatus } from '../../constants/constants';
+import { AppRoute, AuthorizationState, DataStatus } from '../../constants/constants';
 import Loading from '../loading/loading';
 import { useAppSelector } from '../hooks';
 import { HelmetProvider } from 'react-helmet-async';
+import { getAuthorizationState } from '../../store/authorization-slice/auth-selecror';
+import { getOffersState } from '../../store/offers-slice/offers-selectors';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const offersLoadingState = useAppSelector((state) => state.offersState);
-  if (authorizationStatus === AuthorizationStatus.Unknown || offersLoadingState === DataStatus.Loading) {
+  const authorizationStatus = useAppSelector(getAuthorizationState);
+  const offersLoadingState = useAppSelector(getOffersState);
+  if (authorizationStatus === AuthorizationState.Unknown || offersLoadingState === DataStatus.Loading) {
     return <Loading />;
   }
   return (
@@ -25,14 +27,14 @@ function App(): JSX.Element {
           />
           <Route path={AppRoute.Login}
             element={
-              <PrivateRoute navigateTo={AppRoute.Main} authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute navigateTo={AppRoute.Main} authorizationState={AuthorizationState.NoAuth}>
                 <LoginPage />
               </PrivateRoute>
             }
           />
           <Route path={AppRoute.Favorites}
             element={
-              <PrivateRoute navigateTo={AppRoute.Login} authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute navigateTo={AppRoute.Login} authorizationState={AuthorizationState.Auth}>
                 <FavoritesPage/>
               </PrivateRoute>
             }

@@ -3,6 +3,7 @@ import { City } from '../types/city/city-type';
 import { CityLocation } from '../types/city/city-location-type';
 import dayjs from 'dayjs';
 import { SortType } from '../constants/constants';
+import { Offer } from '../types/types-offer';
 
 const getStarsRating = (rating: number) => `${20 * rating}%`;
 
@@ -81,6 +82,8 @@ const sortByPriceFromHighToLow = (offers: Offers[]) => [...offers].sort(getPrice
 
 const sortByRatingFromHighToLow = (offers: Offers[]) => [...offers].sort(getRatingFromHighToLow);
 
+const updateOfferFavoriteStatus = (offers: Offers[], response: Offer, isFavorite: boolean) => offers.map((offer) => offer.id === response.id ? { ...offer, isFavorite } : offer);
+
 const sortOffers = (offers: Offers[], sortingType: SortType): Offers[] => {
   switch (sortingType) {
     case SortType.POPULAR:
@@ -97,4 +100,4 @@ const sortOffers = (offers: Offers[], sortingType: SortType): Offers[] => {
 };
 
 
-export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities, convertDateToHumanized, convertDateToProperty, getCurrentLocationOffers, sortByPriceFromLowToHigh, sortByPriceFromHighToLow, sortByRatingFromHighToLow, sortOffers, checkReviewInRange};
+export { getStarsRating, getFavoriteOffers, capitalizeFirstLetter, getOffersCities, convertDateToHumanized, convertDateToProperty, getCurrentLocationOffers, sortByPriceFromLowToHigh, sortByPriceFromHighToLow, sortByRatingFromHighToLow, sortOffers, checkReviewInRange, updateOfferFavoriteStatus};

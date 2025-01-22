@@ -6,7 +6,7 @@ export enum AppRoute {
   Error = '*',
 }
 
-export enum AuthorizationStatus {
+export enum AuthorizationState {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
@@ -50,7 +50,7 @@ export enum DataStatus {
   Error = 'error',
 }
 
-export enum SubmitStatus {
+export enum SubmitState {
   Unknown = 'unknown',
   Loading = 'loading',
   Loaded = 'loaded',
@@ -64,6 +64,31 @@ export enum ReviewOption {
 
 export enum MAX_PLACES_NEARBY {
   MAX_PLACES = 3,
+}
+
+export enum FavouriteStatus {
+  SetFavorite = 1,
+  UnsetFavorite = 0,
+}
+
+export enum FavouriteButtonType {
+  OFFER = 'offer',
+  PLACE_CARD = 'place-card',
+}
+
+export enum NameSpace {
+  Auth = 'auth',
+  Offers = 'offers',
+  Offer = 'offer',
+  OffersNearby = 'offersNearby',
+  Favorite = 'favorite',
+}
+
+export enum SignInState {
+  Unknown = 'unknown',
+  SigningIn= 'signing-in',
+  SignedIn = 'signed-in',
+  Error = 'error',
 }
 
 export const RATING_OPTIONS = [
@@ -124,6 +149,15 @@ export const BLANK_OFFER_EXTENDED = {
   rating: 0,
   bedrooms: 0,
   maxAdults: 0,
+};
+
+export const BLANK_CITY = {
+  name: '',
+  location: {
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
+  }
 };
 
 export const MAP_MARKER_DEFAULT = '../img/pin.svg';

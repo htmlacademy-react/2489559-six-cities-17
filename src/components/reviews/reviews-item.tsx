@@ -1,6 +1,7 @@
 import { Reviews } from '../../types/types-reviews';
 import { getStarsRating } from '../../utils/utils';
 import { convertDateToHumanized,convertDateToProperty } from '../../utils/utils';
+import { memo } from 'react';
 
 type ReviewsItemProps = {
   reviews: Reviews;
@@ -32,4 +33,4 @@ function ReviewsItem (props : ReviewsItemProps) : JSX.Element {
   );
 }
 
-export default ReviewsItem;
+export default memo(ReviewsItem);

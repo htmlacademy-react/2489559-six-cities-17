@@ -1,7 +1,9 @@
 import { Offer } from '../../types/types-offer';
-import classNames from 'classnames';
 import { getStarsRating } from '../../utils/utils';
 import { capitalizeFirstLetter } from '../../utils/utils';
+import { FavouriteButtonType } from '../../constants/constants';
+import FavoriteButton from '../favourite-button/favourite-button';
+import { memo } from 'react';
 
 type OfferInfoProps = {
   offer: Offer;
@@ -10,7 +12,7 @@ type OfferInfoProps = {
 
 function OfferInfo(props: OfferInfoProps): JSX.Element {
   const { offer, goods } = props;
-  const { isPremium, price, isFavorite, rating, title, type, maxAdults, bedrooms } = offer;
+  const { isPremium, price, isFavorite, rating, title, type, maxAdults, bedrooms, id } = offer;
   const starsRating = getStarsRating(rating);
 
   return (
@@ -23,12 +25,7 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
         <h1 className="offer__name">
           {title}
         </h1>
-        <button className={classNames('offer__bookmark-button', { 'offer__bookmark-button--active': isFavorite }, 'button', 'type="button"')}>
-          <svg className="offer__bookmark-icon" width={31} height={33}>
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-        </button>
+        <FavoriteButton isFavorite={isFavorite} favouriteButtonType={FavouriteButtonType.OFFER} id={id} />
       </div>
       <div className="offer__rating rating">
         <div className="offer__stars rating__stars">
@@ -66,4 +63,4 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
   );
 }
 
-export default OfferInfo;
+export default memo(OfferInfo);

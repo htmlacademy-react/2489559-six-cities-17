@@ -1,9 +1,10 @@
-import { ChangeEvent, useState } from 'react';
-import { RATING_OPTIONS, ReviewOption, SubmitStatus } from '../../constants/constants';
+import { ChangeEvent, useState, memo, useCallback } from 'react';
+import { RATING_OPTIONS, ReviewOption, SubmitState } from '../../constants/constants';
 import CommentRatingButton from './review-rating-button';
 import { checkReviewInRange } from '../../utils/utils';
 import { submitCommentAction } from '../../store/api-action';
 import { useAppDispatch, useAppSelector} from '../../components/hooks';
+import { getSubmittingState } from '../../store/offer-slice/offer-selector';
 
 type ReviewsFormProps = {
   id: string;
@@ -12,7 +13,7 @@ type ReviewsFormProps = {
 function ReviewsForm(props: ReviewsFormProps): JSX.Element {
   const { id } = props;
   const dispatch = useAppDispatch();
-  const submitStatus = useAppSelector((state) => state.submitStatus);
+  const submitState = useAppSelector(getSubmittingState);
 
   const [formRating, setFormRating] = useState(0);
   const [formComment, setFormComment] = useState('');
@@ -20,7 +21,7 @@ function ReviewsForm(props: ReviewsFormProps): JSX.Element {
   const comment = formComment;
   const rating = formRating;
 
-  const handleRatingChange = (value: number): void => setFormRating(value);
+  const handleRatingChange = useCallback((value: number): void => setFormRating(value), [setFormRating]);
 
   const handleCommentChange = (text: string): void => setFormComment(text);
 
@@ -65,13 +66,13 @@ function ReviewsForm(props: ReviewsFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!(formRating && checkReviewInRange(ReviewOption.minLength, ReviewOption.maxLength, formComment)) || submitStatus === SubmitStatus.Loading}
+          disabled={!(formRating && checkReviewInRange(ReviewOption.minLength, ReviewOption.maxLength, formComment)) || submitState === SubmitState.Loading}
         >
-          {submitStatus === SubmitStatus.Loading ? 'Loading...' : 'Submit'}
+          {submitState === SubmitState.Loading ? 'Loading...' : 'Submit'}
         </button>
       </div>
     </form>
   );
 }
 
-export default ReviewsForm;
+export default memo(ReviewsForm);

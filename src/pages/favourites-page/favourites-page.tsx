@@ -1,9 +1,9 @@
 import Header from '../../components/header/header';
 import FavoritesList from '../../components/favourites/favourites-list';
 import { useAppSelector } from '../../components/hooks';
-
+import { getFavoriteOffers } from '../../store/favourites-slice/favourites-selector';
 function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.favoriteOffers);
+  const offers = useAppSelector(getFavoriteOffers);
   return (
     <div className="page">
       <Header/>

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State } from '../types/state';
+import { AppDispatch, AppState } from '../types/state';
 import { saveToken, dropToken } from '../service/token';
 import { APIRoute } from '../constants/constants';
 import { AuthData } from '../types/auth-data';
@@ -13,7 +13,7 @@ import { ReviewForm } from '../types/types-review-form';
 
 export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'offers/fetchOffers', async (_arg, { extra: api }) => {
@@ -23,7 +23,7 @@ export const fetchOffersAction = createAsyncThunk<Offers[], undefined, {
 
 export const fetchOfferAction = createAsyncThunk<Offer, string, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'offers/fetchOfferExtended', async (id, { extra: api }) => {
@@ -31,9 +31,19 @@ export const fetchOfferAction = createAsyncThunk<Offer, string, {
     return data;
   });
 
+export const fetchOffersFavouritesAction = createAsyncThunk<Offers[], undefined, {
+  dispatch: AppDispatch;
+  state: AppState;
+  extra: AxiosInstance;
+}>(
+  'offers/fetchOffersFavorite', async (_arg, { extra: api }) => {
+    const { data } = await api.get<Offers[]>(APIRoute.Favorite);
+    return data;
+  });
+
 export const fetchOfferCommentsAction = createAsyncThunk<OfferComment[], string, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'offers/fetchOfferExtendedComments', async (id, { extra: api }) => {
@@ -43,7 +53,7 @@ export const fetchOfferCommentsAction = createAsyncThunk<OfferComment[], string,
 
 export const fetchOffersNearbyAction = createAsyncThunk<Offers[], string, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'offers/fetchOffersNearby', async (id, { extra: api }) => {
@@ -51,9 +61,42 @@ export const fetchOffersNearbyAction = createAsyncThunk<Offers[], string, {
     return data;
   });
 
+export const addOfferToFavoriteAction = createAsyncThunk<Offer, string, {
+    dispatch: AppDispatch;
+    state: AppState;
+    extra: AxiosInstance;
+  }>(
+    'offers/addOfferToFavorite', async (id, { dispatch, extra: api }) => {
+      const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${id}/1`);
+      dispatch(fetchOffersFavouritesAction());
+      return data;
+    });
+
+export const removeOfferFromFavoriteAction = createAsyncThunk<Offer, string, {
+    dispatch: AppDispatch;
+    state: AppState;
+    extra: AxiosInstance;
+  }>(
+    'offers/removeOfferFromFavorite', async (id, { dispatch, extra: api }) => {
+      const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${id}/0`);
+      dispatch(fetchOffersFavouritesAction());
+      return data;
+    });
+
+export const addOffersToFavoriteAction = createAsyncThunk<Offers[], string, {
+      dispatch: AppDispatch;
+      state: AppState;
+      extra: AxiosInstance;
+    }>(
+      'offers/addOfferToFavorite', async (id, { dispatch, extra: api }) => {
+        const { data } = await api.post<Offers[]>(`${APIRoute.Favorite}/${id}/1`);
+        dispatch(fetchOffersFavouritesAction());
+        return data;
+      });
+
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'user/checkAuth', async (_arg, { extra: api }) => {
@@ -63,7 +106,7 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
 
 export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'user/login', async ({ login: email, password }, { extra: api }) => {
@@ -74,7 +117,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
 
 export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'user/logout', async (_arg, { extra: api }) => {
@@ -84,7 +127,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 
 export const submitCommentAction = createAsyncThunk<void, ReviewForm, {
   dispatch: AppDispatch;
-  state: State;
+  state: AppState;
   extra: AxiosInstance;
 }>(
   'offers/submitComment', async ({ comment, rating, id }, { dispatch, extra: api }) => {

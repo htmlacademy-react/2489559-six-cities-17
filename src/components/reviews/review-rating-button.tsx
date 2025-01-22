@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type CommentRatingButtonProps = {
   value: number;
   title: string;
@@ -29,4 +31,4 @@ function CommentRatingButton(props: CommentRatingButtonProps): JSX.Element {
   );
 }
 
-export default CommentRatingButton;
+export default memo(CommentRatingButton);

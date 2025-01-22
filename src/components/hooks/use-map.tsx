@@ -7,15 +7,20 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
   const isRendered = useRef<boolean>(false);
 
   useEffect(() => {
-    if (mapRef.current && !isRendered.current) {
+    if (map) {
+      map.setView({ lat: city.location.latitude, lng: city.location.longitude }, city.location.zoom);
+    }
+  }, [city, map]);
+
+  useEffect(() => {
+    if (mapRef.current !== null && !isRendered.current) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,
-          lng: city.location.longitude,
+          lng: city.location.longitude
         },
         zoom: city.location.zoom,
       });
-
       const layer = new TileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
         {
