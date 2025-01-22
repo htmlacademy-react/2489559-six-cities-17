@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { addOfferToFavoriteAction, removeOfferFromFavoriteAction } from '../../store/api-action';
-import { AuthorizationStatus, FavouriteButtonType, AppRoute, DataStatus } from '../../constants/constants';
+import { FavouriteButtonType, AppRoute, DataStatus, AuthorizationState } from '../../constants/constants';
 import { useNavigate } from 'react-router-dom';
+import { getFavoriteOfferStatusState } from '../../store/favourites-slice/favourites-selector';
+import { getAuthorizationState } from '../../store/authorization-slice/auth-selecror';
 
 type FavoriteButtonProps = {
   isFavorite: boolean;
@@ -13,8 +15,8 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   const { isFavorite, favouriteButtonType, id } = props;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const favoriteToggleState = useAppSelector((state) => state.favoriteOffersState);
+  const authStatus = useAppSelector(getAuthorizationState);
+  const favoriteToggleState = useAppSelector(getFavoriteOfferStatusState);
 
   const buttonClass = classNames(
     `${favouriteButtonType}__bookmark-button`,
@@ -24,7 +26,7 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
   );
 
   const handleFavoriteButtonClick = () => {
-    if (authStatus === AuthorizationStatus.Auth) {
+    if (authStatus === AuthorizationState.Auth) {
       dispatch(isFavorite ? removeOfferFromFavoriteAction(id) : addOfferToFavoriteAction(id));
     } else {
       navigate(AppRoute.Login);

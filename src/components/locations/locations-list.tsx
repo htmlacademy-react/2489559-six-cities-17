@@ -1,19 +1,21 @@
 import LocationsItem from './location-item';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { MouseEvent } from 'react';
-import { changeCity, changeSortingType } from '../../store/action';
+import { changeCity, changeSortingType } from '../../store/offers-slice/offers-slice';
 import { SortType } from '../../constants/constants';
+import { getOffersCityTitle } from '../../store/offers-slice/offers-selectors';
+
 type LocationsListProps = {
   locations: string[];
 }
 
 function LocationsList(props: LocationsListProps): JSX.Element {
   const { locations } = props;
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector(getOffersCityTitle);
   const dispatch = useAppDispatch();
 
   const handleCityChange = (evt: MouseEvent<HTMLAnchorElement>) => {
-    dispatch(changeCity({city: evt.currentTarget.text}));
+    dispatch(changeCity(evt.currentTarget.text));
     dispatch(changeSortingType(SortType.POPULAR));
   };
   return (

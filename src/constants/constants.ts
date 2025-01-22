@@ -6,7 +6,7 @@ export enum AppRoute {
   Error = '*',
 }
 
-export enum AuthorizationStatus {
+export enum AuthorizationState {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
@@ -50,7 +50,7 @@ export enum DataStatus {
   Error = 'error',
 }
 
-export enum SubmitStatus {
+export enum SubmitState {
   Unknown = 'unknown',
   Loading = 'loading',
   Loaded = 'loaded',
@@ -74,6 +74,21 @@ export enum FavouriteStatus {
 export enum FavouriteButtonType {
   OFFER = 'offer',
   PLACE_CARD = 'place-card',
+}
+
+export enum NameSpace {
+  Auth = 'auth',
+  Offers = 'offers',
+  Offer = 'offer',
+  OffersNearby = 'offersNearby',
+  Favorite = 'favorite',
+}
+
+export enum SignInState {
+  Unknown = 'unknown',
+  SigningIn= 'signing-in',
+  SignedIn = 'signed-in',
+  Error = 'error',
 }
 
 export const RATING_OPTIONS = [

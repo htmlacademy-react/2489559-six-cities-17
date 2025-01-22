@@ -8,12 +8,13 @@ import { useState } from 'react';
 import { LOCATIONS, OfferPageType } from '../../constants/constants';
 import { useAppSelector } from '../../components/hooks';
 import { MouseEvent } from 'react';
+import { getCurrentOffers, getOffersCityTitle } from '../../store/offers-slice/offers-selectors';
 
 function MainPage(): JSX.Element {
 
 
-  const currentOffers = useAppSelector((state) => state.currentOffers);
-  const currentCityTitle = useAppSelector((state) => state.city);
+  const currentOffers = useAppSelector(getCurrentOffers);
+  const currentCityTitle = useAppSelector(getOffersCityTitle);
   const currentCity: City = currentOffers[0].city;
 
   const [selectedOffer, setSelectedOffer] = useState<Offers | null>(null);

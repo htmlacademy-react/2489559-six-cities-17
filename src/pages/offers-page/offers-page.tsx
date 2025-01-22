@@ -4,21 +4,25 @@ import ReviewsForm from '../../components/reviews/reviews-form';
 import ReviewsList from '../../components/reviews/reviews-list';
 import OffersList from '../../components/offer/offers-list';
 import { useEffect } from 'react';
-import { MAX_PLACES_NEARBY, OfferPageType } from '../../constants/constants';
+import { AppRoute, DataStatus, MAX_PLACES_NEARBY, OfferPageType } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { fetchOfferAction, fetchOfferCommentsAction, fetchOffersNearbyAction } from '../../store/api-action';
 import OfferImages from '../../components/offer/offer-images';
 import OfferInfo from '../../components/offer/offer-info';
 import OfferHostInfo from '../../components/offer/offer-host-info';
-import { AuthorizationStatus } from '../../constants/constants';
+import { AuthorizationState } from '../../constants/constants';
+import { getOffer, getOfferState, getOfferComments, getOffersNearby} from '../../store/offer-slice/offer-selector';
+import { getAuthorizationState } from '../../store/authorization-slice/auth-selecror';
+import Loading from '../../components/loading/loading';
 
 function OfferPage(): JSX.Element {
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const currentOfferNearby = useAppSelector((state) => state.currentOffersNearby);
-  const currentOfferComments = useAppSelector((state) => state.currentOfferComments);
+  const currentOffer = useAppSelector(getOffer);
+  const currentOfferState = useAppSelector(getOfferState);
+  const currentOfferComments = useAppSelector(getOfferComments);
+  const currentOfferNearby = useAppSelector(getOffersNearby);
   const offersNearby = currentOfferNearby && currentOfferNearby.slice(0, MAX_PLACES_NEARBY.MAX_PLACES);
-  const isAuth = useAppSelector((state) => state.authorizationStatus) === AuthorizationStatus.Auth;
+  const isAuth = useAppSelector(getAuthorizationState) === AuthorizationState.Auth;
 
   const dispatch = useAppDispatch();
 
@@ -31,6 +35,14 @@ function OfferPage(): JSX.Element {
       dispatch(fetchOffersNearbyAction(id));
     }
   }, [id, currentOffer.id, dispatch]);
+
+  if (currentOfferState === DataStatus.Loading) {
+    return <Loading />;
+  }
+  if (currentOfferState === DataStatus.Error || !id) {
+    return <Navigate to={AppRoute.Error} />;
+
+  }
 
   return (
     <div className="page">
