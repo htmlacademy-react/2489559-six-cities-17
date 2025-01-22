@@ -1,6 +1,6 @@
 import LocationsItem from './location-item';
 import { useAppSelector, useAppDispatch } from '../hooks';
-import { MouseEvent } from 'react';
+import { MouseEvent, memo, useCallback } from 'react';
 import { changeCity, changeSortingType } from '../../store/offers-slice/offers-slice';
 import { SortType } from '../../constants/constants';
 import { getOffersCityTitle } from '../../store/offers-slice/offers-selectors';
@@ -14,10 +14,10 @@ function LocationsList(props: LocationsListProps): JSX.Element {
   const currentCity = useAppSelector(getOffersCityTitle);
   const dispatch = useAppDispatch();
 
-  const handleCityChange = (evt: MouseEvent<HTMLAnchorElement>) => {
+  const handleCityChange = useCallback((evt: MouseEvent<HTMLAnchorElement>) => {
     dispatch(changeCity(evt.currentTarget.text));
     dispatch(changeSortingType(SortType.POPULAR));
-  };
+  }, [dispatch]);
   return (
     <div className="tabs">
       <section className="locations container">
@@ -29,4 +29,4 @@ function LocationsList(props: LocationsListProps): JSX.Element {
     </div>
   );
 }
-export default LocationsList;
+export default memo(LocationsList);

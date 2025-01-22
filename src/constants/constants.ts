@@ -151,6 +151,15 @@ export const BLANK_OFFER_EXTENDED = {
   maxAdults: 0,
 };
 
+export const BLANK_CITY = {
+  name: '',
+  location: {
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
+  }
+};
+
 export const MAP_MARKER_DEFAULT = '../img/pin.svg';
 
 export const MAP_MARKER_CURRENT = '../img/pin-active.svg';

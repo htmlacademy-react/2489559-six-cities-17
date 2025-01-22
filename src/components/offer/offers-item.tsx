@@ -4,7 +4,7 @@ import { getStarsRating, capitalizeFirstLetter } from '../../utils/utils';
 import { Link } from 'react-router-dom';
 import { AppRoute, FavouriteButtonType } from '../../constants/constants';
 import { generatePath } from 'react-router-dom';
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
 import { OfferPageType } from '../../constants/constants';
 import FavoriteButton from '../favourite-button/favourite-button';
 
@@ -67,4 +67,4 @@ function OfferItem(props: OfferItemProps): JSX.Element {
   );
 }
 
-export default OfferItem;
+export default memo(OfferItem);

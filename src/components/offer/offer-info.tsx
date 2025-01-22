@@ -3,6 +3,7 @@ import { getStarsRating } from '../../utils/utils';
 import { capitalizeFirstLetter } from '../../utils/utils';
 import { FavouriteButtonType } from '../../constants/constants';
 import FavoriteButton from '../favourite-button/favourite-button';
+import { memo } from 'react';
 
 type OfferInfoProps = {
   offer: Offer;
@@ -62,4 +63,4 @@ function OfferInfo(props: OfferInfoProps): JSX.Element {
   );
 }
 
-export default OfferInfo;
+export default memo(OfferInfo);

@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type OfferImagesProps = {
   images: string[] | null;
 }
@@ -17,4 +19,4 @@ function OfferImages(props: OfferImagesProps): JSX.Element {
   );
 }
 
-export default OfferImages;
+export default memo(OfferImages);

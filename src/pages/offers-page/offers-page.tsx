@@ -3,7 +3,7 @@ import Map from '../../components/map/map';
 import ReviewsForm from '../../components/reviews/reviews-form';
 import ReviewsList from '../../components/reviews/reviews-list';
 import OffersList from '../../components/offer/offers-list';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { AppRoute, DataStatus, MAX_PLACES_NEARBY, OfferPageType } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../components/hooks';
 import { Navigate, useParams } from 'react-router-dom';
@@ -80,4 +80,4 @@ function OfferPage(): JSX.Element {
   );
 }
 
-export default OfferPage;
+export default memo(OfferPage);

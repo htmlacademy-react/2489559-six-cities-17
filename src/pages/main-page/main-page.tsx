@@ -2,30 +2,32 @@ import LocationsList from '../../components/locations/locations-list';
 import Header from '../../components/header/header';
 import SortingList from '../../components/sorting/sorting-list';
 import OffersList from '../../components/offer/offers-list';
-import { Offers, City } from '../../types/types-offers';
+import { Offers } from '../../types/types-offers';
 import Map from '../../components/map/map';
-import { useState } from 'react';
 import { LOCATIONS, OfferPageType } from '../../constants/constants';
 import { useAppSelector } from '../../components/hooks';
-import { MouseEvent } from 'react';
+import { MouseEvent, memo, useState, useCallback } from 'react';
 import { getCurrentOffers, getOffersCityTitle } from '../../store/offers-slice/offers-selectors';
+import { BLANK_CITY } from '../../constants/constants';
+import { City } from '../../types/city/city-type';
 
 function MainPage(): JSX.Element {
 
-
   const currentOffers = useAppSelector(getCurrentOffers);
   const currentCityTitle = useAppSelector(getOffersCityTitle);
-  const currentCity: City = currentOffers[0].city;
+  const isCurrentOffersEmpty = currentOffers.length === 0;
+
+  const currentCity: City = isCurrentOffersEmpty ? BLANK_CITY : currentOffers[0].city;
 
   const [selectedOffer, setSelectedOffer] = useState<Offers | null>(null);
 
-  const handleOfferMouseEnter = (evt: MouseEvent<HTMLElement>) => {
+  const handleOfferMouseEnter = useCallback((evt: MouseEvent<HTMLElement>) => {
     const currentOffer = currentOffers.find((element) => element.id === evt.currentTarget.dataset.id);
     if (!currentOffer) {
       return;
     }
     setSelectedOffer(currentOffer);
-  };
+  }, [currentOffers]);
   const handleOfferMouseLeave = () => {
     setSelectedOffer(null);
   };
@@ -55,4 +57,4 @@ function MainPage(): JSX.Element {
   );
 }
 
-export default MainPage;
+export default memo(MainPage);

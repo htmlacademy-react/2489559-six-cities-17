@@ -5,6 +5,7 @@ import { FavouriteButtonType, AppRoute, DataStatus, AuthorizationState } from '.
 import { useNavigate } from 'react-router-dom';
 import { getFavoriteOfferStatusState } from '../../store/favourites-slice/favourites-selector';
 import { getAuthorizationState } from '../../store/authorization-slice/auth-selecror';
+import { useCallback } from 'react';
 
 type FavoriteButtonProps = {
   isFavorite: boolean;
@@ -25,13 +26,13 @@ function FavoriteButton(props: FavoriteButtonProps): JSX.Element {
     'button'
   );
 
-  const handleFavoriteButtonClick = () => {
+  const handleFavoriteButtonClick = useCallback(() => {
     if (authStatus === AuthorizationState.Auth) {
       dispatch(isFavorite ? removeOfferFromFavoriteAction(id) : addOfferToFavoriteAction(id));
     } else {
       navigate(AppRoute.Login);
     }
-  };
+  }, [authStatus, dispatch, id, isFavorite, navigate]);
 
   return (
     <button

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants/constants';
+import { memo } from 'react';
 
 function HeaderLogo(): JSX.Element {
   return (
@@ -9,4 +10,4 @@ function HeaderLogo(): JSX.Element {
   );
 }
 
-export default HeaderLogo;
+export default memo(HeaderLogo);
